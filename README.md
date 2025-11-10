@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Automatic Dev
+
+A modern Next.js application built with TypeScript, Prisma, and PostgreSQL.
+
+## Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org) with App Router
+- **Language**: TypeScript
+- **Database**: PostgreSQL with [Prisma ORM](https://www.prisma.io)
+- **UI Components**: [Radix UI](https://www.radix-ui.com)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+- **Code Quality**: [Biome](https://biomejs.dev)
+- **Form Handling**: React Hook Form with Zod validation
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 20+
+- PostgreSQL database
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd automatic-dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit `.env` and add your database connection string:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/database_name?schema=public"
+```
+
+4. Run database migrations:
+```bash
+npx prisma migrate dev
+```
+
+5. Generate Prisma Client:
+```bash
+npx prisma generate
+```
+
+6. Start the development server:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Available Scripts
+
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production with Turbopack
+- `npm run start` - Start production server
+- `npm run lint` - Run Biome linter
+- `npm run format` - Format code with Biome
+
+## Database
+
+This project uses Prisma ORM for database management.
+
+### Prisma Commands
+
+- `npx prisma migrate dev` - Create and apply migrations in development
+- `npx prisma migrate deploy` - Apply migrations in production
+- `npx prisma generate` - Generate Prisma Client
+- `npx prisma studio` - Open Prisma Studio (database GUI)
+- `npx prisma db push` - Push schema changes without migrations
+
+### Database Schema
+
+The current schema includes:
+- **User** - User accounts with authentication
+- **Post** - Blog posts with author relationship
+
+See `prisma/schema.prisma` for the complete schema definition.
+
+## Project Structure
+
+```
+├── prisma/
+│   ├── schema.prisma          # Database schema
+│   └── migrations/            # Database migrations
+├── src/
+│   ├── app/                   # Next.js app router pages
+│   ├── components/            # React components
+│   │   └── ui/               # UI component library
+│   ├── generated/            # Generated Prisma Client
+│   ├── hooks/                # Custom React hooks
+│   └── lib/                  # Utility functions and db client
+└── public/                   # Static assets
+```
+
+## Environment Variables
+
+Required environment variables:
+- `DATABASE_URL` - PostgreSQL connection string
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Radix UI Documentation](https://www.radix-ui.com/docs)
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure to set the `DATABASE_URL` environment variable in your Vercel project settings.
